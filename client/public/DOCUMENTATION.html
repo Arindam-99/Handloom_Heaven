@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handloom Haven — Project Documentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+  :root {
+    --primary: #3C5241;
+    --accent: #C4822D;
+    --cream: #FAF7F2;
+    --dark: #2A2520;
+    --warm-gray: #7D7162;
+    --border: #E8E4DC;
+    --white: #FFFDF9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--dark);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* Cover Page */
+  .cover {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(160deg, #2A2520 0%, #3C5241 50%, #2e3f32 100%);
+    color: white;
+    text-align: center;
+    padding: 60px 40px;
+    page-break-after: always;
+  }
+  .cover-badge {
+    display: inline-block;
+    border: 1px solid rgba(196, 130, 45, 0.5);
+    padding: 6px 24px;
+    border-radius: 999px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 40px;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+  .cover h1 span { color: var(--accent); }
+  .cover .subtitle {
+    font-size: 18px;
+    color: rgba(255,255,255,0.6);
+    margin-bottom: 50px;
+    max-width: 500px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.5);
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 30px;
+    margin-top: 40px;
+  }
+  .cover-meta strong { color: rgba(255,255,255,0.8); }
+
+  /* Main Content */
+  .content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 60px 40px;
+  }
+
+  /* Table of Contents */
+  .toc {
+    page-break-after: always;
+    padding: 60px 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .toc h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    color: var(--primary);
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--accent);
+  }
+  .toc-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 12px 0;
+    border-bottom: 1px dotted var(--border);
+    font-size: 15px;
+  }
+  .toc-item .num { color: var(--accent); font-weight: 600; margin-right: 12px; }
+  .toc-item .title { font-weight: 500; }
+  .toc-item .page { color: var(--warm-gray); font-size: 13px; }
+
+  /* Section Styling */
+  .section {
+    page-break-before: always;
+    padding-top: 20px;
+  }
+  .section:first-of-type { page-break-before: avoid; }
+
+  .section-num {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 36px;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--primary);
+    margin-bottom: 8px;
+    line-height: 1.3;
+  }
+
+  h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: var(--primary);
+    margin-top: 32px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h4 {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-top: 20px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  p { margin-bottom: 14px; color: var(--dark); }
+
+  .section-desc {
+    font-size: 15px;
+    color: var(--warm-gray);
+    margin-bottom: 24px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Code blocks */
+  code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: #f0ece6;
+    padding: 2px 8px;
+    border-radius: 4px;
+    color: var(--primary);
+  }
+
+  pre {
+    background: #2A2520;
+    color: #e8e4dc;
+    padding: 20px;
+    border-radius: 12px;
+    overflow-x: auto;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    line-height: 1.6;
+    margin: 16px 0;
+  }
+  pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 14px;
+  }
+  thead th {
+    background: var(--primary);
+    color: white;
+    padding: 10px 16px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  thead th:first-child { border-radius: 8px 0 0 0; }
+  thead th:last-child { border-radius: 0 8px 0 0; }
+  tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr:nth-child(even) { background: rgba(60, 82, 65, 0.03); }
+  tbody tr:hover { background: rgba(196, 130, 45, 0.05); }
+
+  /* Info boxes */
+  .info-box {
+    background: white;
+    border-left: 4px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 20px 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  }
+  .info-box.green { border-left-color: var(--primary); }
+  .info-box strong { color: var(--primary); }
+
+  /* Feature cards */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .feature-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: all 0.3s ease;
+  }
+  .feature-card .icon {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .feature-card h5 {
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--primary);
+  }
+  .feature-card p {
+    font-size: 13px;
+    color: var(--warm-gray);
+    margin: 0;
+  }
+
+  /* Lists */
+  ul, ol {
+    padding-left: 24px;
+    margin: 12px 0;
+  }
+  li { margin-bottom: 6px; }
+  li strong { color: var(--primary); }
+
+  /* Badges */
+  .badge {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 2px 10px;
+    border-radius: 999px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-right: 6px;
+  }
+  .badge.amber { background: var(--accent); }
+  .badge.outline {
+    background: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+  }
+
+  /* Divider */
+  hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 30px 0;
+  }
+
+  /* Footer */
+  .doc-footer {
+    text-align: center;
+    padding: 40px;
+    color: var(--warm-gray);
+    font-size: 13px;
+    border-top: 2px solid var(--border);
+    margin-top: 40px;
+  }
+
+  @media print {
+    body { font-size: 12px; }
+    .cover { page-break-after: always; }
+    .section { page-break-before: always; }
+    pre { white-space: pre-wrap; word-wrap: break-word; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============================================ -->
+<!-- COVER PAGE                                   -->
+<!-- ============================================ -->
+<div class="cover">
+  <div class="cover-badge">Project Documentation</div>
+  <h1>Handloom <span>Haven</span></h1>
+  <p class="subtitle">Arunachal Pradesh Heritage E-Commerce Platform — Complete Technical & Feature Documentation</p>
+  <div class="cover-meta">
+    <div><strong>Version</strong> 1.0.0</div>
+    <div><strong>Date</strong> September 2026</div>
+    <div><strong>Built by</strong> Ari's Web Creation</div>
+    <div><strong>Stack</strong> MERN</div>
+  </div>
+</div>
+
+<!-- ============================================ -->
+<!-- TABLE OF CONTENTS                            -->
+<!-- ============================================ -->
+<div class="toc">
+  <h2>Table of Contents</h2>
+  <div class="toc-item"><div><span class="num">01</span><span class="title">Project Overview</span></div></div>
+  <div class="toc-item"><div><span class="num">02</span><span class="title">Technology Stack</span></div></div>
+  <div class="toc-item"><div><span class="num">03</span><span class="title">System Architecture</span></div></div>
+  <div class="toc-item"><div><span class="num">04</span><span class="title">Folder Structure</span></div></div>
+  <div class="toc-item"><div><span class="num">05</span><span class="title">Database Schema (MongoDB Models)</span></div></div>
+  <div class="toc-item"><div><span class="num">06</span><span class="title">API Endpoints</span></div></div>
+  <div class="toc-item"><div><span class="num">07</span><span class="title">Authentication System</span></div></div>
+  <div class="toc-item"><div><span class="num">08</span><span class="title">Frontend Pages & Routes</span></div></div>
+  <div class="toc-item"><div><span class="num">09</span><span class="title">Feature Breakdown — Customer</span></div></div>
+  <div class="toc-item"><div><span class="num">10</span><span class="title">Feature Breakdown — Seller</span></div></div>
+  <div class="toc-item"><div><span class="num">11</span><span class="title">Feature Breakdown — Admin</span></div></div>
+  <div class="toc-item"><div><span class="num">12</span><span class="title">Product Catalog (46 Products)</span></div></div>
+  <div class="toc-item"><div><span class="num">13</span><span class="title">UI/UX Design & Animations</span></div></div>
+  <div class="toc-item"><div><span class="num">14</span><span class="title">Payment System (Demo)</span></div></div>
+  <div class="toc-item"><div><span class="num">15</span><span class="title">State Management (Redux)</span></div></div>
+  <div class="toc-item"><div><span class="num">16</span><span class="title">Environment Configuration</span></div></div>
+  <div class="toc-item"><div><span class="num">17</span><span class="title">How to Run the Project</span></div></div>
+  <div class="toc-item"><div><span class="num">18</span><span class="title">Default Accounts</span></div></div>
+  <div class="toc-item"><div><span class="num">19</span><span class="title">Future Roadmap</span></div></div>
+</div>
+
+<!-- ============================================ -->
+<!-- MAIN CONTENT                                 -->
+<!-- ============================================ -->
+<div class="content">
+
+<!-- Section 1 -->
+<div class="section">
+  <div class="section-num">1</div>
+  <h2>Project Overview</h2>
+  <p class="section-desc">Handloom Haven is a full-stack e-commerce web application dedicated to authentic Arunachal Pradesh handloom, jewellery, traditional clothing, and handcrafted products. It connects local artisans and sellers with customers who value cultural heritage and ethical shopping.</p>
+
+  <h3>Project Vision</h3>
+  <p>The platform is designed to become a multi-vendor marketplace — similar in concept to Amazon or Meesho — but focused exclusively on products from Arunachal Pradesh. It celebrates the diverse tribal cultures, traditional weaving techniques, and artisanal craftsmanship of the region.</p>
+
+  <h3>Core Objectives</h3>
+  <ul>
+    <li><strong>Preserve Heritage:</strong> Showcase Arunachal Pradesh's traditional crafts to a global audience</li>
+    <li><strong>Empower Artisans:</strong> Give local craftsmen and women a platform to sell directly to customers</li>
+    <li><strong>Cultural Storytelling:</strong> Each product carries the story of its maker, material, and cultural significance</li>
+    <li><strong>Modern Shopping:</strong> Provide a professional, trustworthy e-commerce experience</li>
+    <li><strong>Multi-Vendor:</strong> Support multiple sellers with independent dashboards</li>
+  </ul>
+
+  <h3>Target Users</h3>
+  <table>
+    <thead><tr><th>Role</th><th>Description</th><th>Access Level</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge">Customer</span></td><td>Browses, searches, and purchases products</td><td>Public + Account</td></tr>
+      <tr><td><span class="badge amber">Seller</span></td><td>Local artisan or shop owner managing products</td><td>Seller Dashboard</td></tr>
+      <tr><td><span class="badge" style="background:#8a5120">Admin</span></td><td>Platform manager overseeing everything</td><td>Full Control</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 2 -->
+<div class="section">
+  <div class="section-num">2</div>
+  <h2>Technology Stack</h2>
+  <p class="section-desc">Built on the MERN stack with modern tooling for development, build, and deployment.</p>
+
+  <h3>Frontend</h3>
+  <table>
+    <thead><tr><th>Technology</th><th>Version</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>React</strong></td><td>19.2.8</td><td>UI component library</td></tr>
+      <tr><td><strong>React Router</strong></td><td>7.18.3</td><td>Client-side routing</td></tr>
+      <tr><td><strong>Tailwind CSS</strong></td><td>4.3.3</td><td>Utility-first CSS framework</td></tr>
+      <tr><td><strong>Redux Toolkit</strong></td><td>2.12.0</td><td>Global state management</td></tr>
+      <tr><td><strong>React Redux</strong></td><td>9.3.0</td><td>React bindings for Redux</td></tr>
+      <tr><td><strong>Axios</strong></td><td>1.20.0</td><td>HTTP client for API calls</td></tr>
+      <tr><td><strong>React Hook Form</strong></td><td>7.87.0</td><td>Form handling and validation</td></tr>
+      <tr><td><strong>React Hot Toast</strong></td><td>2.6.0</td><td>Toast notifications</td></tr>
+      <tr><td><strong>React Icons</strong></td><td>5.7.0</td><td>Icon library (Feather icons)</td></tr>
+      <tr><td><strong>Vite</strong></td><td>8.2.2</td><td>Build tool & dev server</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Backend</h3>
+  <table>
+    <thead><tr><th>Technology</th><th>Version</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Node.js</strong></td><td>Runtime</td><td>Server-side JavaScript runtime</td></tr>
+      <tr><td><strong>Express.js</strong></td><td>5.2.1</td><td>Web framework for REST APIs</td></tr>
+      <tr><td><strong>MongoDB</strong></td><td>9.9.4 (Mongoose)</td><td>NoSQL database</td></tr>
+      <tr><td><strong>JWT</strong></td><td>9.0.3</td><td>JSON Web Token authentication</td></tr>
+      <tr><td><strong>Bcrypt</strong></td><td>3.0.3</td><td>Password hashing</td></tr>
+      <tr><td><strong>Multer</strong></td><td>2.3.0</td><td>File upload handling</td></tr>
+      <tr><td><strong>Cloudinary</strong></td><td>2.11.0</td><td>Image storage (configured)</td></tr>
+      <tr><td><strong>Express Validator</strong></td><td>7.3.2</td><td>Input validation</td></tr>
+      <tr><td><strong>Cookie Parser</strong></td><td>1.4.7</td><td>Cookie parsing middleware</td></tr>
+      <tr><td><strong>CORS</strong></td><td>2.8.6</td><td>Cross-origin resource sharing</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Database</h3>
+  <div class="info-box green">
+    <strong>MongoDB Atlas</strong> — Cloud-hosted NoSQL database used for all data storage. Connected via Mongoose ODM with connection pooling and indexing.
+  </div>
+
+  <h3>External Services</h3>
+  <table>
+    <thead><tr><th>Service</th><th>Status</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Cloudinary</strong></td><td>Configured</td><td>Product image storage & optimization</td></tr>
+      <tr><td><strong>Unsplash</strong></td><td>Active</td><td>Product/category images via URLs</td></tr>
+      <tr><td><strong>Razorpay</strong></td><td>Planned</td><td>Payment gateway (UPI, Cards, Net Banking)</td></tr>
+      <tr><td><strong>Google OAuth</strong></td><td>Planned</td><td>Social login integration</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 3 -->
+<div class="section">
+  <div class="section-num">3</div>
+  <h2>System Architecture</h2>
+  <p class="section-desc">The application follows a standard three-tier architecture with clear separation between presentation, business logic, and data layers.</p>
+
+  <h3>Architecture Diagram</h3>
+  <pre><code>                    ┌─────────────────────────┐
+                    │   React Frontend (Vite)  │
+                    │   localhost:5173         │
+                    └──────────┬──────────────┘
+                               │ REST API (JSON)
+                               │ Axios + Bearer Token
+                    ┌──────────▼──────────────┐
+                    │   Express.js Backend     │
+                    │   localhost:5000         │
+                    │                          │
+                    │  ┌─────────┐ ┌────────┐ │
+                    │  │  Auth   │ │Upload  │ │
+                    │  │  Middleware│ │Middleware││
+                    │  └────┬────┘ └───┬────┘ │
+                    │       │          │      │
+                    │  ┌────▼──────────▼────┐ │
+                    │  │   Route Handlers    │ │
+                    │  │   Controllers       │ │
+                    │  └────────┬───────────┘ │
+                    └───────────┼─────────────┘
+                                │ Mongoose ODM
+                    ┌───────────▼─────────────┐
+                    │    MongoDB Atlas         │
+                    │    Cloud Database        │
+                    │                          │
+                    │  users · products        │
+                    │  categories · orders     │
+                    │  carts · reviews         │
+                    │  coupons · wishlist      │
+                    └──────────────────────────┘</code></pre>
+
+  <h3>Data Flow</h3>
+  <ol>
+    <li><strong>Client Request:</strong> React sends HTTP request via Axios with JWT token in Authorization header</li>
+    <li><strong>Authentication:</strong> Express middleware verifies JWT and attaches user to request</li>
+    <li><strong>Route Handling:</strong> Express routes dispatch to appropriate controllers</li>
+    <li><strong>Business Logic:</strong> Controllers process data, validate inputs, interact with models</li>
+    <li><strong>Database Operations:</strong> Mongoose models perform CRUD operations on MongoDB</li>
+    <li><strong>Response:</strong> JSON response sent back to client, Redux store updated</li>
+    <li><strong>UI Update:</strong> React components re-render with new state</li>
+  </ol>
+</div>
+
+<!-- Section 4 -->
+<div class="section">
+  <div class="section-num">4</div>
+  <h2>Project Folder Structure</h2>
+  <p class="section-desc">Clean separation between client (React) and server (Express) with well-organized modules.</p>
+
+  <pre><code>handloom-haven/
+│
+├── client/                          # React Frontend
+│   ├── public/
+│   │   ├── images/
+│   │   │   ├── hero/               # Hero banner images (hero1.jpg, hero2.jpg, hero3.jpg)
+│   │   │   ├── logo.png            # Site logo
+│   │   │   ├── tribal-masks.jpg    # Tribal masks image
+│   │   │   └── IMAGE_REFERENCE.md  # Complete image catalog
+│   │   ├── favicon.png             # Browser tab icon
+│   │   └── DOCUMENTATION.html      # This documentation file
+│   │
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── layout/
+│   │   │   │   ├── Navbar.jsx      # Top navigation bar
+│   │   │   │   └── Footer.jsx     # Footer with links & newsletter
+│   │   │   └── ui/
+│   │   │       ├── Logo.jsx        # Reusable logo component
+│   │   │       ├── SplashScreen.jsx # Initial splash animation
+│   │   │       ├── PageLoader.jsx   # Route transition loader
+│   │   │       └── ProtectedRoute.jsx # Auth guard component
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── Home.jsx            # Homepage (hero, categories, products)
+│   │   │   ├── auth/
+│   │   │   │   ├── Login.jsx       # User login page
+│   │   │   │   └── Register.jsx    # User registration page
+│   │   │   ├── products/
+│   │   │   │   ├── Shop.jsx        # Product listing with filters
+│   │   │   │   └── ProductDetail.jsx # Single product page with reviews
+│   │   │   ├── cart/
+│   │   │   │   ├── Cart.jsx        # Shopping cart
+│   │   │   │   └── Checkout.jsx    # Multi-step checkout
+│   │   │   ├── payment/
+│   │   │   │   └── DemoPayment.jsx # Demo payment gateway page
+│   │   │   ├── sections/
+│   │   │   │   └── SectionPage.jsx # Reusable category section page
+│   │   │   ├── misc/
+│   │   │   │   ├── Account.jsx     # User account dashboard
+│   │   │   │   ├── Settings.jsx    # Seller/Admin settings
+│   │   │   │   ├── Orders.jsx      # User order history
+│   │   │   │   ├── OrderDetail.jsx # Single order tracking
+│   │   │   │   ├── Wishlist.jsx    # Saved products
+│   │   │   │   └── About.jsx       # About Arunachal Pradesh
+│   │   │   ├── seller/
+│   │   │   │   ├── SellerDashboard.jsx
+│   │   │   │   ├── SellerProducts.jsx
+│   │   │   │   ├── SellerAddProduct.jsx
+│   │   │   │   └── SellerOrders.jsx
+│   │   │   └── admin/
+│   │   │       ├── AdminDashboard.jsx
+│   │   │       ├── AdminUsers.jsx
+│   │   │       ├── AdminProducts.jsx
+│   │   │       ├── AdminOrders.jsx
+│   │   │       └── AdminCategories.jsx
+│   │   │
+│   │   ├── store/
+│   │   │   ├── index.js            # Redux store configuration
+│   │   │   └── slices/
+│   │   │       ├── authSlice.js    # Authentication state
+│   │   │       ├── cartSlice.js    # Shopping cart state
+│   │   │       └── productSlice.js # Product listing state
+│   │   │
+│   │   ├── services/
+│   │   │   └── api.js              # Axios instance with interceptors
+│   │   │
+│   │   ├── hooks/
+│   │   │   └── useScrollReveal.js  # Intersection Observer hook
+│   │   │
+│   │   ├── App.jsx                 # Root component with all routes
+│   │   ├── main.jsx                # React entry point
+│   │   └── index.css               # Tailwind + custom animations
+│   │
+│   ├── index.html                  # HTML entry point
+│   ├── vite.config.js              # Vite configuration
+│   └── package.json
+│
+├── server/                          # Express Backend
+│   ├── config/
+│   │   └── db.js                   # MongoDB connection setup
+│   │
+│   ├── models/                      # Mongoose schemas
+│   │   ├── User.js                 # User model (auth, addresses, wishlist)
+│   │   ├── Product.js              # Product model (details, images, artisan info)
+│   │   ├── Category.js             # Category model
+│   │   ├── Order.js                # Order model (items, status, payment)
+│   │   ├── Cart.js                 # Cart model
+│   │   ├── Review.js               # Review model (ratings, images)
+│   │   └── Coupon.js               # Coupon model (discounts)
+│   │
+│   ├── controllers/                 # Business logic
+│   │   ├── authController.js       # Register, login, getMe
+│   │   ├── productController.js    # CRUD + search + filtering
+│   │   ├── categoryController.js   # Category management
+│   │   ├── cartController.js       # Add, update, remove items
+│   │   ├── orderController.js      # Place order, track status
+│   │   ├── reviewController.js     # Create/read reviews
+│   │   ├── wishlistController.js   # Add/remove wishlist items
+│   │   ├── sellerController.js     # Seller product & order management
+│   │   ├── adminController.js      # Admin user & order management
+│   │   └── uploadController.js     # File upload handling
+│   │
+│   ├── routes/                      # API route definitions
+│   │   ├── auth.js                 # POST /api/auth/register, /login, /me
+│   │   ├── products.js             # GET/POST /api/products
+│   │   ├── categories.js           # GET /api/categories
+│   │   ├── cart.js                 # GET/PUT/DELETE /api/cart
+│   │   ├── orders.js               # GET/POST /api/orders
+│   │   ├── reviews.js              # GET/POST /api/reviews
+│   │   ├── wishlist.js             # GET/POST/DELETE /api/wishlist
+│   │   ├── sellers.js              # Seller-specific endpoints
+│   │   ├── admin.js                # Admin-specific endpoints
+│   │   ├── users.js                # User management
+│   │   └── upload.js               # File upload endpoint
+│   │
+│   ├── middleware/                   # Express middleware
+│   │   ├── auth.js                 # JWT protect + role authorize
+│   │   ├── errorHandler.js         # Global error handler
+│   │   ├── upload.js               # Multer file upload config
+│   │   ├── clerkAuth.js            # Clerk auth (legacy)
+│   │   └── syncUser.js             # User sync (legacy)
+│   │
+│   ├── utils/
+│   │   ├── seed.js                 # Basic product seeding
+│   │   ├── seedFull.js             # Full 28-product seed
+│   │   ├── addMoreProducts.js      # Additional 18 products
+│   │   ├── fixImages.js            # Image URL fixer
+│   │   ├── fixAllImages.js         # Complete image fixer
+│   │   └── fixEverything.js        # Comprehensive data fixer
+│   │
+│   ├── server.js                   # Express app entry point
+│   ├── .env                        # Environment variables
+│   └── package.json
+│
+├── .env                            # Root environment variables
+└── .freebuff/                      # Codebuff project config</code></pre>
+</div>
+
+<!-- Section 5 -->
+<div class="section">
+  <div class="section-num">5</div>
+  <h2>Database Schema (MongoDB Models)</h2>
+  <p class="section-desc">Seven Mongoose models power the application, each with specific validation, indexing, and relationship patterns.</p>
+
+  <h3>User Model</h3>
+  <pre><code>{
+  name:          String (required),
+  email:         String (required, unique, lowercase),
+  password:      String (hashed with bcrypt, minlength: 6),
+  phone:         String,
+  avatar:        String (profile photo URL),
+  role:          "user" | "seller" | "admin"  (default: "user"),
+  isActive:      Boolean (default: true),
+  addresses: [{
+    name, phone, street, city,
+    state (default: "Arunachal Pradesh"),
+    pincode, isDefault
+  }],
+  wishlist:      [ObjectId → Product],
+  timestamps:    true
+}</code></pre>
+
+  <h3>Product Model</h3>
+  <pre><code>{
+  name:              String (required, indexed),
+  slug:              String (auto-generated from name, unique),
+  category:          ObjectId → Category (required),
+  subCategory:       String,
+  price:             Number (required),
+  discountPrice:     Number (null if no discount),
+  images:            [{ url: String, alt: String }],   // 3 images per product
+  description:       String,
+  material:          String,
+  colors:            [String],
+  sizes:             [String],
+  stock:             Number (default: 0),
+  origin:            String (default: "Arunachal Pradesh"),
+  tribe:             String,
+  craftingMethod:    String,
+  storyBehindProduct: String,
+  weight:            String,
+  seller:            ObjectId → User (required),
+  artisanName:       String,
+  artisanLocation:   String,
+  artisanExperience: String,
+  artisanBio:        String,
+  rating:            Number (0–5),
+  numReviews:        Number,
+  tags:              [String],
+  isApproved:        Boolean (default: false),
+  isActive:          Boolean (default: true),
+  isFeatured:        Boolean,
+  isBestseller:      Boolean,
+  totalSold:         Number,
+  timestamps:        true
+}</code></pre>
+
+  <h3>Order Model</h3>
+  <pre><code>{
+  user:            ObjectId → User (required),
+  items: [{
+    product:       ObjectId → Product,
+    name, image, price,
+    quantity, size, color,
+    seller:        ObjectId → User
+  }],
+  shippingAddress: { name, phone, street, city, state, pincode },
+  paymentMethod:   "razorpay" | "cod",
+  paymentId:       String,
+  paymentStatus:   "pending" | "paid" | "failed" | "refunded",
+  subtotal:        Number,
+  shippingCharge:  Number,
+  discount:        Number,
+  totalAmount:     Number,
+  couponCode:      String,
+  status:          "placed" → "confirmed" → "processing" → "packed"
+                   → "shipped" → "out_for_delivery" → "delivered",
+  statusHistory:   [{ status, date, note }],
+  trackingNumber:  String,
+  estimatedDelivery: Date,
+  deliveredAt:     Date,
+  timestamps:      true
+}</code></pre>
+
+  <h3>Other Models</h3>
+  <table>
+    <thead><tr><th>Model</th><th>Key Fields</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Category</strong></td><td>name, slug, description, image, isActive</td><td>Product categorization</td></tr>
+      <tr><td><strong>Cart</strong></td><td>user, items[product, quantity, size, color]</td><td>Persistent shopping cart</td></tr>
+      <tr><td><strong>Review</strong></td><td>user, product, rating (1–5), title, comment, images[], isVerified</td><td>Product reviews with photos</td></tr>
+      <tr><td><strong>Coupon</strong></td><td>code, discountType (% or flat), minAmount, maxDiscount, expiry</td><td>Discount coupons</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 6 -->
+<div class="section">
+  <div class="section-num">6</div>
+  <h2>API Endpoints</h2>
+  <p class="section-desc">RESTful API design with public, authenticated, and role-protected routes.</p>
+
+  <h3>Authentication</h3>
+  <table>
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge">POST</span></td><td><code>/api/auth/register</code></td><td>Public</td><td>Create new user account</td></tr>
+      <tr><td><span class="badge">POST</span></td><td><code>/api/auth/login</code></td><td>Public</td><td>Login with email & password</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/auth/me</code></td><td>Protected</td><td>Get current user profile</td></tr>
+      <tr><td><span class="badge">PUT</span></td><td><code>/api/auth/update-profile</code></td><td>Protected</td><td>Update name, phone, avatar</td></tr>
+      <tr><td><span class="badge">PUT</span></td><td><code>/api/auth/update-password</code></td><td>Protected</td><td>Change password</td></tr>
+      <tr><td><span class="badge">POST</span></td><td><code>/api/auth/address</code></td><td>Protected</td><td>Add delivery address</td></tr>
+      <tr><td><span class="badge">DELETE</span></td><td><code>/api/auth/address/:id</code></td><td>Protected</td><td>Remove address</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Products</h3>
+  <table>
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Auth</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/products</code></td><td>Public</td><td>List products (search, filter, sort, paginate)</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/products/:slug</code></td><td>Public</td><td>Get single product details</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/products/featured</code></td><td>Public</td><td>Get featured products</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/products/bestsellers</code></td><td>Public</td><td>Get bestseller products</td></tr>
+      <tr><td><span class="badge">POST</span></td><td><code>/api/products</code></td><td>Seller/Admin</td><td>Create new product</td></tr>
+      <tr><td><span class="badge">PUT</span></td><td><code>/api/products/:id</code></td><td>Seller/Admin</td><td>Update product</td></tr>
+      <tr><td><span class="badge">DELETE</span></td><td><code>/api/products/:id</code></td><td>Seller/Admin</td><td>Delete product</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Cart & Wishlist</h3>
+  <table>
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/cart</code></td><td>Get user cart</td></tr>
+      <tr><td><span class="badge">POST</span></td><td><code>/api/cart</code></td><td>Add item to cart</td></tr>
+      <tr><td><span class="badge">PUT</span></td><td><code>/api/cart/:itemId</code></td><td>Update quantity</td></tr>
+      <tr><td><span class="badge">DELETE</span></td><td><code>/api/cart/:itemId</code></td><td>Remove item from cart</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/wishlist</code></td><td>Get wishlist</td></tr>
+      <tr><td><span class="badge">POST</span></td><td><code>/api/wishlist/:productId</code></td><td>Toggle wishlist item</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Orders & Reviews</h3>
+  <table>
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge">POST</span></td><td><code>/api/orders</code></td><td>Place a new order</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/orders</code></td><td>Get user's orders</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/orders/:id</code></td><td>Get order details</td></tr>
+      <tr><td><span class="badge">PUT</span></td><td><code>/api/orders/:id/status</code></td><td>Update order status (seller)</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/reviews/product/:productId</code></td><td>Get product reviews</td></tr>
+      <tr><td><span class="badge">POST</span></td><td><code>/api/reviews</code></td><td>Submit a review</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Admin Endpoints</h3>
+  <table>
+    <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/admin/dashboard</code></td><td>Admin stats (users, orders, revenue)</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/admin/users</code></td><td>List all users</td></tr>
+      <tr><td><span class="badge">PUT</span></td><td><code>/api/admin/users/:id</code></td><td>Update user role/status</td></tr>
+      <tr><td><span class="badge">GET</span></td><td><code>/api/admin/orders</code></td><td>List all orders</td></tr>
+      <tr><td><span class="badge">PUT</span></td><td><code>/api/admin/products/:id/approve</code></td><td>Approve product listing</td></tr>
+      <tr><td><span class="badge">DELETE</span></td><td><code>/api/admin/products/:id</code></td><td>Remove product</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 7 -->
+<div class="section">
+  <div class="section-num">7</div>
+  <h2>Authentication System</h2>
+  <p class="section-desc">JWT-based authentication with role-based access control for Customer, Seller, and Admin users.</p>
+
+  <h3>How It Works</h3>
+  <ol>
+    <li><strong>Registration:</strong> User submits name, email, password → Password hashed with bcrypt → Saved to MongoDB → JWT token generated</li>
+    <li><strong>Login:</strong> User submits email + password → Password verified → JWT token returned → Stored in <code>localStorage</code></li>
+    <li><strong>Protected Routes:</strong> Axios interceptor attaches <code>Authorization: Bearer &lt;token&gt;</code> header → Middleware verifies JWT → Attaches user to request</li>
+    <li><strong>Role Authorization:</strong> Route-level middleware checks <code>user.role</code> against allowed roles (user, seller, admin)</li>
+  </ol>
+
+  <h3>Frontend Auth Flow</h3>
+  <pre><code>// services/api.js — Axios interceptor
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});</code></pre>
+
+  <h3>Backend Auth Middleware</h3>
+  <pre><code>// middleware/auth.js
+const protect = async (req, res, next) => {
+  // 1. Extract token from Authorization header
+  // 2. Verify JWT with secret key
+  // 3. Find user in database
+  // 4. Attach user to req.user
+  // 5. Call next()
+};
+
+const authorize = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return res.status(403).json({ message: 'Not authorized' });
+    }
+    next();
+  };
+};</code></pre>
+
+  <h3>Role-Based Route Protection</h3>
+  <table>
+    <thead><tr><th>Role</th><th>Access</th><th>Protected Routes</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge">User</span></td><td>Cart, Checkout, Orders, Wishlist, Account</td><td><code>/checkout</code>, <code>/account</code>, <code>/payment</code></td></tr>
+      <tr><td><span class="badge amber">Seller</span></td><td>Product management, Order fulfillment</td><td><code>/seller/*</code></td></tr>
+      <tr><td><span class="badge" style="background:#8a5120">Admin</span></td><td>Full platform control</td><td><code>/admin/*</code>, <code>/seller/*</code></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 8 -->
+<div class="section">
+  <div class="section-num">8</div>
+  <h2>Frontend Pages & Routes</h2>
+  <p class="section-desc">30+ routes organized into public, protected, and role-specific sections.</p>
+
+  <h3>Public Routes</h3>
+  <table>
+    <thead><tr><th>URL</th><th>Page</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>/</code></td><td><strong>Homepage</strong></td><td>Hero banner, categories, featured products, artisans, newsletter</td></tr>
+      <tr><td><code>/shop</code></td><td><strong>Shop</strong></td><td>All products with category filter, sort, search</td></tr>
+      <tr><td><code>/shop/:categorySlug</code></td><td><strong>Filtered Shop</strong></td><td>Products filtered by category</td></tr>
+      <tr><td><code>/handloom</code></td><td><strong>Handloom Section</strong></td><td>Handloom products with hero banner</td></tr>
+      <tr><td><code>/jewellery</code></td><td><strong>Jewellery Section</strong></td><td>Jewellery products with hero banner</td></tr>
+      <tr><td><code>/handicrafts</code></td><td><strong>Handicrafts Section</strong></td><td>Handicraft products with hero banner</td></tr>
+      <tr><td><code>/collections</code></td><td><strong>Collections</strong></td><td>All curated products</td></tr>
+      <tr><td><code>/product/:slug</code></td><td><strong>Product Detail</strong></td><td>Product info, images, reviews, artisan story</td></tr>
+      <tr><td><code>/about</code></td><td><strong>About</strong></td><td>About Arunachal Pradesh heritage</td></tr>
+      <tr><td><code>/login</code></td><td><strong>Login</strong></td><td>Email + password login</td></tr>
+      <tr><td><code>/register</code></td><td><strong>Register</strong></td><td>Account creation form</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Protected Routes (Authenticated Users)</h3>
+  <table>
+    <thead><tr><th>URL</th><th>Page</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>/cart</code></td><td><strong>Cart</strong></td><td>Shopping cart with quantity controls</td></tr>
+      <tr><td><code>/wishlist</code></td><td><strong>Wishlist</strong></td><td>Saved products</td></tr>
+      <tr><td><code>/checkout</code></td><td><strong>Checkout</strong></td><td>Address → Summary → Payment selection</td></tr>
+      <tr><td><code>/payment</code></td><td><strong>Demo Payment</strong></td><td>UPI / Card / Net Banking demo</td></tr>
+      <tr><td><code>/account</code></td><td><strong>My Account</strong></td><td>Profile, addresses, payment methods</td></tr>
+      <tr><td><code>/account/orders</code></td><td><strong>My Orders</strong></td><td>Order history with status</td></tr>
+      <tr><td><code>/account/orders/:id</code></td><td><strong>Order Detail</strong></td><td>Order tracking timeline</td></tr>
+      <tr><td><code>/account/settings</code></td><td><strong>Settings</strong></td><td>Appearance, selling options</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Seller Routes</h3>
+  <table>
+    <thead><tr><th>URL</th><th>Page</th></tr></thead>
+    <tbody>
+      <tr><td><code>/seller</code></td><td>Seller Dashboard (stats, recent orders)</td></tr>
+      <tr><td><code>/seller/products</code></td><td>My Products (list, edit, delete)</td></tr>
+      <tr><td><code>/seller/products/add</code></td><td>Add New Product form</td></tr>
+      <tr><td><code>/seller/orders</code></td><td>Manage Orders (update status)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Admin Routes</h3>
+  <table>
+    <thead><tr><th>URL</th><th>Page</th></tr></thead>
+    <tbody>
+      <tr><td><code>/admin</code></td><td>Admin Dashboard (users, sellers, products, orders, revenue)</td></tr>
+      <tr><td><code>/admin/users</code></td><td>User Management (view, ban, change roles)</td></tr>
+      <tr><td><code>/admin/products</code></td><td>Product Management (approve, reject, delete)</td></tr>
+      <tr><td><code>/admin/orders</code></td><td>Order Management (all orders, status updates)</td></tr>
+      <tr><td><code>/admin/categories</code></td><td>Category Management (add, edit, delete)</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 9 -->
+<div class="section">
+  <div class="section-num">9</div>
+  <h2>Feature Breakdown — Customer</h2>
+  <p class="section-desc">Complete shopping experience from browsing to order tracking.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="icon">🔍</div>
+      <h5>Product Search</h5>
+      <p>Full-text search across product names, descriptions, materials, and tags. Real-time results via URL params.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🏷️</div>
+      <h5>Category Filtering</h5>
+      <p>Filter by 6 categories with image thumbnails: Handloom, Women's Wear, Men's Wear, Jewellery, Handicrafts, Bags.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📊</div>
+      <h5>Sorting Options</h5>
+      <p>Sort by Latest, Price Low→High, Price High→Low, Rating, Popular, Bestselling.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">❤️</div>
+      <h5>Wishlist</h5>
+      <p>Save products to wishlist. Heart button toggles on all product cards. Persists in localStorage.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🛒</div>
+      <h5>Shopping Cart</h5>
+      <p>Add products with size/color selection. Update quantities. Persistent cart in database for logged-in users.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">💳</div>
+      <h5>Checkout Flow</h5>
+      <p>3-step process: Delivery Address → Order Summary → Payment Method selection.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📦</div>
+      <h5>Order Tracking</h5>
+      <p>Visual timeline: Placed → Confirmed → Processing → Shipped → Delivered with status history.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">⭐</div>
+      <h5>Reviews & Ratings</h5>
+      <p>Write reviews with 1–5 star rating, text, and photo uploads. See other customers' reviews.</p>
+    </div>
+  </div>
+
+  <h3>Homepage Sections</h3>
+  <ol>
+    <li><strong>Hero Banner</strong> — Auto-sliding carousel with 3 authentic Arunachal tribal portraits (6s interval)</li>
+    <li><strong>Shop by Category</strong> — 6 category cards with product images, clickable to filtered shop</li>
+    <li><strong>Featured Products</strong> — Grid of top-rated products with quick-add-to-cart</li>
+    <li><strong>Meet Our Artisans</strong> — 5 artisan cards with names, crafts, and experience</li>
+    <li><strong>Discover Arunachal</strong> — Cultural exploration cards (Tribes, Handloom, Jewellery, Craft Stories)</li>
+    <li><strong>Why Buy From Us</strong> — Trust badges (Free Shipping, Secure Payments, 24/7 Support, Easy Returns)</li>
+    <li><strong>Newsletter</strong> — Email subscription + cultural quote</li>
+  </ol>
+
+  <h3>Product Detail Page</h3>
+  <ul>
+    <li><strong>Image Gallery</strong> — Main image + 4 clickable thumbnails below</li>
+    <li><strong>Product Info</strong> — Name, price, sizes, colors, stock status, quantity selector</li>
+    <li><strong>Wishlist & Compare</strong> — Heart toggle + compare button</li>
+    <li><strong>Share</strong> — Facebook, Twitter, LinkedIn, Copy Link</li>
+    <li><strong>Story Behind the Product</strong> — Cultural narrative section</li>
+    <li><strong>Artisan Info</strong> — Name, location, years of experience</li>
+    <li><strong>Related Products</strong> — Same-category recommendations</li>
+    <li><strong>Reviews Section</strong> — Rating summary, rating distribution bars, user reviews with photos</li>
+  </ul>
+</div>
+
+<!-- Section 10 -->
+<div class="section">
+  <div class="section-num">10</div>
+  <h2>Feature Breakdown — Seller</h2>
+  <p class="section-desc">Dedicated dashboard for local artisans and sellers to manage their products and orders.</p>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="icon">📊</div>
+      <h5>Seller Dashboard</h5>
+      <p>Total products, orders, pending orders, and total sales with a clean stat cards layout.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📦</div>
+      <h5>Product Management</h5>
+      <p>Add products with name, price, images, description, material, colors, sizes, stock, and artisan details.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🚚</div>
+      <h5>Order Management</h5>
+      <p>View incoming orders, update status (processing → packed → shipped), add tracking numbers.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">➕</div>
+      <h5>Add Product Form</h5>
+      <p>Full form with category selection, image upload, pricing, inventory, and "Story Behind the Product" field.</p>
+    </div>
+  </div>
+
+  <h3>Seller Routes</h3>
+  <table>
+    <thead><tr><th>URL</th><th>Function</th></tr></thead>
+    <tbody>
+      <tr><td><code>/seller</code></td><td>Dashboard with sales overview and recent orders</td></tr>
+      <tr><td><code>/seller/products</code></td><td>List of seller's products with edit/delete actions</td></tr>
+      <tr><td><code>/seller/products/add</code></td><td>Form to add new product with all fields</td></tr>
+      <tr><td><code>/seller/orders</code></td><td>Incoming orders with status update capability</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 11 -->
+<div class="section">
+  <div class="section-num">11</div>
+  <h2>Feature Breakdown — Admin</h2>
+  <p class="section-desc">Complete platform oversight with management dashboards for users, products, and orders.</p>
+
+  <h3>Admin Dashboard Stats</h3>
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="icon">👥</div>
+      <h5>User Management</h5>
+      <p>View all registered users, change roles (user/seller/admin), ban/unban accounts.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">🏪</div>
+      <h5>Seller Management</h5>
+      <p>View all sellers, approve/reject seller applications, monitor seller performance.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">✅</div>
+      <h5>Product Approval</h5>
+      <p>Review and approve/reject products submitted by sellers before they go live.</p>
+    </div>
+    <div class="feature-card">
+      <div class="icon">📋</div>
+      <h5>Order Oversight</h5>
+      <p>View all orders across the platform, track status, handle cancellations and refunds.</p>
+    </div>
+  </div>
+
+  <h3>Admin Controls</h3>
+  <ul>
+    <li><strong>Approve/Reject Products</strong> — Quality control before products appear on the shop</li>
+    <li><strong>Manage Categories</strong> — Add, edit, or remove product categories</li>
+    <li><strong>User Role Management</strong> — Promote users to sellers, demote sellers, ban users</li>
+    <li><strong>Order Management</strong> — View all orders, update statuses, handle complaints</li>
+    <li><strong>Platform Analytics</strong> — Total users, sellers, products, orders, revenue</li>
+  </ul>
+</div>
+
+<!-- Section 12 -->
+<div class="section">
+  <div class="section-num">12</div>
+  <h2>Product Catalog</h2>
+  <p class="section-desc">46 authentic Arunachal Pradesh products across 6 categories, each with unique images, descriptions, and artisan details.</p>
+
+  <h3>Category Breakdown</h3>
+  <table>
+    <thead><tr><th>Category</th><th>Products</th><th>Price Range</th></tr></thead>
+    <tbody>
+      <tr><td><strong>🧵 Handloom</strong></td><td>8 products</td><td>₹500 – ₹3,500</td></tr>
+      <tr><td><strong>👗 Women's Traditional Wear</strong></td><td>8 products</td><td>₹800 – ₹4,500</td></tr>
+      <tr><td><strong>👔 Men's Traditional Wear</strong></td><td>7 products</td><td>₹900 – ₹3,800</td></tr>
+      <tr><td><strong>💎 Jewellery & Accessories</strong></td><td>8 products</td><td>₹300 – ₹2,800</td></tr>
+      <tr><td><strong>🏠 Handicrafts</strong></td><td>8 products</td><td>₹250 – ₹2,200</td></tr>
+      <tr><td><strong>👜 Bags</strong></td><td>7 products</td><td>₹450 – ₹2,500</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Sample Products</h3>
+  <table>
+    <thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Material</th></tr></thead>
+    <tbody>
+      <tr><td>Arunachal Traditional Handwoven Shawl</td><td>Handloom</td><td>₹2,499</td><td>Handwoven Cotton</td></tr>
+      <tr><td>Nyishi Tribal Beaded Necklace</td><td>Jewellery</td><td>₹1,800</td><td>Beads & Silver</td></tr>
+      <tr><td>Handmade Bamboo Basket</td><td>Handicrafts</td><td>₹899</td><td>Natural Bamboo</td></tr>
+      <tr><td>Traditional Handloom Dress</td><td>Women's Wear</td><td>₹3,200</td><td>Handloom Cotton</td></tr>
+      <tr><td>Handwoven Men's Jacket</td><td>Men's Wear</td><td>₹2,800</td><td>Wool Blend</td></tr>
+      <tr><td>Bamboo Handcrafted Bag</td><td>Bags</td><td>₹1,200</td><td>Bamboo & Leather</td></tr>
+      <tr><td>Traditional Stole</td><td>Handloom</td><td>₹1,500</td><td>Silk Cotton</td></tr>
+      <tr><td>Handmade Earrings</td><td>Jewellery</td><td>₹650</td><td>Silver & Beads</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Each Product Includes</h3>
+  <ul>
+    <li>3 unique high-quality images (Unsplash URLs)</li>
+    <li>Detailed description with material, colors, sizes</li>
+    <li>Artisan name, location, and years of experience</li>
+    <li>"Story Behind the Product" cultural narrative</li>
+    <li>Origin: Arunachal Pradesh</li>
+    <li>Stock quantity tracking</li>
+    <li>Rating and review count</li>
+  </ul>
+</div>
+
+<!-- Section 13 -->
+<div class="section">
+  <div class="section-num">13</div>
+  <h2>UI/UX Design & Animations</h2>
+  <p class="section-desc">Earthy organic design language with professional animations for a premium shopping experience.</p>
+
+  <h3>Design System</h3>
+  <table>
+    <thead><tr><th>Element</th><th>Value</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Background</strong></td><td><code>#FAF7F2</code></td><td>Warm cream base</td></tr>
+      <tr><td><strong>Primary</strong></td><td><code>#3C5241</code></td><td>Forest green for CTAs, nav, headings</td></tr>
+      <tr><td><strong>Accent</strong></td><td><code>#C4822D</code></td><td>Amber/terracotta for highlights, badges</td></tr>
+      <tr><td><strong>Text</strong></td><td><code>#2A2520</code></td><td>Warm charcoal for body text</td></tr>
+      <tr><td><strong>Secondary</strong></td><td><code>#7D7162</code></td><td>Warm gray for subtitles</td></tr>
+      <tr><td><strong>Border</strong></td><td><code>#E8E4DC</code></td><td>Soft beige for dividers</td></tr>
+      <tr><td><strong>Heading Font</strong></td><td>Playfair Display</td><td>Serif font for all headings</td></tr>
+      <tr><td><strong>Body Font</strong></td><td>DM Sans</td><td>Modern sans-serif for body text</td></tr>
+      <tr><td><strong>Code Font</strong></td><td>JetBrains Mono</td><td>Monospace for code blocks</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Animations & Interactions</h3>
+  <table>
+    <thead><tr><th>Animation</th><th>Element</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Splash Screen</strong></td><td>Initial Load</td><td>Logo + animated text "Handloom Haven" with letter-by-letter spring reveal</td></tr>
+      <tr><td><strong>Page Loader</strong></td><td>Route Changes</td><td>Spinning logo with double rings (400ms)</td></tr>
+      <tr><td><strong>Card Lift</strong></td><td>Product Cards</td><td>6px upward lift with 20px shadow on hover (cubic-bezier spring)</td></tr>
+      <tr><td><strong>Image Zoom</strong></td><td>Product Images</td><td>Smooth 1.08× scale on hover (0.7s ease)</td></tr>
+      <tr><td><strong>Nav Underline</strong></td><td>Navigation Links</td><td>Underline grows from left on hover with color transition</td></tr>
+      <tr><td><strong>Logo Hover</strong></td><td>Site Logo</td><td>Subtle scale + rotate on hover</td></tr>
+      <tr><td><strong>Search Focus</strong></td><td>Search Bar</td><td>Glow effect with border color change on focus</td></tr>
+      <tr><td><strong>Heart Bounce</strong></td><td>Wishlist Button</td><td>Scale bounce animation when toggled</td></tr>
+      <tr><td><strong>Staggered Fade</strong></td><td>Product Grid</td><td>Cards fade in sequentially (0.1s delay each)</td></tr>
+      <tr><td><strong>Scroll Reveal</strong></td><td>All Sections</td><td>Sections fade up when scrolling into viewport (IntersectionObserver)</td></tr>
+      <tr><td><strong>Hero Auto-Slide</strong></td><td>Homepage Hero</td><td>Carousel auto-slides every 6 seconds with fade transition</td></tr>
+      <tr><td><strong>Button Pulse</strong></td><td>CTA Buttons</td><td>Glowing pulse animation on hover</td></tr>
+      <tr><td><strong>Float</strong></td><td>Decorative Elements</td><td>Gentle vertical floating motion (3s loop)</td></tr>
+    </tbody>
+  </table>
+
+  <h3>CSS Keyframe Definitions</h3>
+  <pre><code>@keyframes fadeIn      { from { opacity:0; translateY(12px) } to { opacity:1; translateY(0) } }
+@keyframes slideUp     { from { opacity:0; translateY(30px) } to { opacity:1; translateY(0) } }
+@keyframes slideInLeft { from { opacity:0; translateX(-30px) } to { opacity:1; translateX(0) } }
+@keyframes fadeInScale { from { opacity:0; scale(0.95) } to { opacity:1; scale(1) } }
+@keyframes shimmer     { 0% { background-position: -200% 0 } 100% { background-position: 200% 0 } }
+@keyframes float       { 0%,100% { translateY(0) } 50% { translateY(-6px) } }</code></pre>
+</div>
+
+<!-- Section 14 -->
+<div class="section">
+  <div class="section-num">14</div>
+  <h2>Payment System (Demo)</h2>
+  <p class="section-desc">Interactive demo payment page simulating real payment flows for UPI, Cards, and Net Banking.</p>
+
+  <h3>Checkout Flow</h3>
+  <pre><code>Product Detail → Add to Cart → Checkout (3 Steps) → Payment Page → Success
+
+Step 1: Delivery Address
+  └── Name, Phone, Street, City, State, Pincode
+
+Step 2: Order Summary
+  └── Product list, Subtotal, Shipping, Total
+
+Step 3: Payment Selection
+  └── UPI / Credit Card / Net Banking / COD</code></pre>
+
+  <h3>Payment Methods</h3>
+  <table>
+    <thead><tr><th>Method</th><th>UI Elements</th><th>Demo Behavior</th></tr></thead>
+    <tbody>
+      <tr><td><strong>UPI</strong></td><td>UPI ID input, Google Pay / PhonePe / Paytm buttons</td><td>Simulates UPI payment with processing animation</td></tr>
+      <tr><td><strong>Credit/Debit Card</strong></td><td>Card number, name, expiry, CVV form</td><td>Simulates card payment with 3-second processing</td></tr>
+      <tr><td><strong>Net Banking</strong></td><td>Bank selection grid (SBI, HDFC, ICICI, etc.)</td><td>Simulates bank redirect and payment</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Payment States</h3>
+  <ol>
+    <li><strong>Form</strong> — User fills in payment details</li>
+    <li><strong>Processing</strong> — Animated spinner with progress bar (2 seconds)</li>
+    <li><strong>Success</strong> — Green checkmark with order ID, estimated delivery, order items</li>
+  </ol>
+</div>
+
+<!-- Section 15 -->
+<div class="section">
+  <div class="section-num">15</div>
+  <h2>State Management (Redux)</h2>
+  <p class="section-desc">Redux Toolkit manages global application state across authentication, cart, and product listings.</p>
+
+  <h3>Redux Slices</h3>
+  <table>
+    <thead><tr><th>Slice</th><th>State Shape</th><th>Key Actions</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><strong>authSlice</strong></td>
+        <td><code>{ user, loading, error }</code></td>
+        <td><code>login</code>, <code>register</code>, <code>getMe</code>, <code>logout</code></td>
+      </tr>
+      <tr>
+        <td><strong>cartSlice</strong></td>
+        <td><code>{ items, total, loading }</code></td>
+        <td><code>fetchCart</code>, <code>addToCart</code>, <code>updateQuantity</code>, <code>removeItem</code></td>
+      </tr>
+      <tr>
+        <td><strong>productSlice</strong></td>
+        <td><code>{ products, featured, loading, filters }</code></td>
+        <td><code>fetchProducts</code>, <code>fetchProduct</code>, <code>searchProducts</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>State Flow</h3>
+  <pre><code>User Action → Dispatch Redux Action → Thunk API Call → Backend → Response → Reducer → Component Re-render</code></pre>
+</div>
+
+<!-- Section 16 -->
+<div class="section">
+  <div class="section-num">16</div>
+  <h2>Environment Configuration</h2>
+  <p class="section-desc">Environment variables control database connections, API keys, and application settings.</p>
+
+  <h3>Server Environment Variables (.env)</h3>
+  <pre><code>MONGODB_URI=mongodb+srv://...     # MongoDB Atlas connection string
+JWT_SECRET=your_jwt_secret        # Secret key for JWT signing
+JWT_EXPIRE=7d                     # Token expiry duration
+PORT=5000                         # Server port
+CLIENT_URL=http://localhost:5173  # Frontend URL for CORS
+NODE_ENV=development              # Environment mode
+
+# Cloudinary (optional)
+CLOUDINARY_CLOUD_NAME=...
+CLOUDINARY_API_KEY=...
+CLOUDINARY_API_SECRET=...</code></pre>
+
+  <h3>Client Environment Variables</h3>
+  <pre><code>VITE_API_URL=/api                 # Backend API base URL
+VITE_CLERK_PUBLISHABLE_KEY=...    # (Legacy, no longer active)</code></pre>
+</div>
+
+<!-- Section 17 -->
+<div class="section">
+  <div class="section-num">17</div>
+  <h2>How to Run the Project</h2>
+  <p class="section-desc">Step-by-step guide to set up and run the development environment.</p>
+
+  <h3>Prerequisites</h3>
+  <ul>
+    <li><strong>Node.js</strong> v18+ installed</li>
+    <li><strong>MongoDB Atlas</strong> account (or local MongoDB)</li>
+    <li><strong>Git</strong> installed</li>
+  </ul>
+
+  <h3>Setup Steps</h3>
+  <pre><code># 1. Clone the repository
+git clone https://github.com/your-repo/handloom-haven.git
+cd handloom-haven
+
+# 2. Install server dependencies
+cd server
+npm install
+
+# 3. Configure environment variables
+# Create .env file in server/ with MongoDB URI and JWT secret
+
+# 4. Seed the database with 46 products
+node utils/seedFull.js
+node utils/addMoreProducts.js
+
+# 5. Start the backend server
+npm run dev
+# Server runs on http://localhost:5000
+
+# 6. In a new terminal, install client dependencies
+cd ../client
+npm install
+
+# 7. Start the frontend dev server
+npm run dev
+# Client runs on http://localhost:5173</code></pre>
+
+  <h3>Available Scripts</h3>
+  <table>
+    <thead><tr><th>Location</th><th>Command</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><code>/server</code></td><td><code>npm run dev</code></td><td>Start backend with file watching</td></tr>
+      <tr><td><code>/server</code></td><td><code>npm start</code></td><td>Start backend in production mode</td></tr>
+      <tr><td><code>/server</code></td><td><code>node utils/seedFull.js</code></td><td>Seed 28 base products</td></tr>
+      <tr><td><code>/server</code></td><td><code>node utils/addMoreProducts.js</code></td><td>Add 18 more products (total: 46)</td></tr>
+      <tr><td><code>/client</code></td><td><code>npm run dev</code></td><td>Start Vite dev server</td></tr>
+      <tr><td><code>/client</code></td><td><code>npm run build</code></td><td>Production build</td></tr>
+      <tr><td><code>/client</code></td><td><code>npm run preview</code></td><td>Preview production build</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 18 -->
+<div class="section">
+  <div class="section-num">18</div>
+  <h2>Default Accounts</h2>
+  <p class="section-desc">Pre-configured accounts for testing all three user roles.</p>
+
+  <table>
+    <thead><tr><th>Role</th><th>Email</th><th>Password</th><th>Access</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge" style="background:#8a5120">Admin</span></td><td><code>admin@arunachal.com</code></td><td><code>admin123</code></td><td>Full platform control, all admin routes</td></tr>
+      <tr><td><span class="badge amber">Seller</span></td><td><code>seller@arunachal.com</code></td><td><code>seller123</code></td><td>Product & order management, seller dashboard</td></tr>
+      <tr><td><span class="badge">Customer</span></td><td>Register via <code>/register</code></td><td>Choose password</td><td>Shopping, cart, wishlist, orders</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- Section 19 -->
+<div class="section">
+  <div class="section-num">19</div>
+  <h2>Future Roadmap</h2>
+  <p class="section-desc">Planned features and improvements for future development phases.</p>
+
+  <table>
+    <thead><tr><th>Phase</th><th>Feature</th><th>Priority</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge">Phase 2</span></td><td><strong>Razorpay Payment Integration</strong> — Real UPI, Card, and Net Banking payments</td><td>High</td></tr>
+      <tr><td><span class="badge">Phase 2</span></td><td><strong>Cloudinary Image Upload</strong> — Sellers upload real product photos</td><td>High</td></tr>
+      <tr><td><span class="badge">Phase 3</span></td><td><strong>Email Notifications</strong> — Order confirmations, status updates</td><td>Medium</td></tr>
+      <tr><td><span class="badge">Phase 3</span></td><td><strong>Coupon System</strong> — Admin creates discounts, users apply at checkout</td><td>Medium</td></tr>
+      <tr><td><span class="badge">Phase 3</span></td><td><strong>Product Recommendations</strong> — AI-powered "You may also like"</td><td>Medium</td></tr>
+      <tr><td><span class="badge">Phase 4</span></td><td><strong>Multi-Language Support</strong> — Hindi, Assamese, and local tribal languages</td><td>Low</td></tr>
+      <tr><td><span class="badge">Phase 4</span></td><td><strong>Advanced Search (Algolia)</strong> — Full-text search with faceted filtering</td><td>Low</td></tr>
+      <tr><td><span class="badge">Phase 4</span></td><td><strong>Shipping Integration</strong> — Real-time tracking with courier APIs</td><td>Low</td></tr>
+      <tr><td><span class="badge">Phase 5</span></td><td><strong>Mobile App (React Native)</strong> — Native iOS & Android shopping experience</td><td>Low</td></tr>
+      <tr><td><span class="badge">Phase 5</span></td><td><strong>Commission & Payouts</strong> — Automated seller payouts with platform fees</td><td>Low</td></tr>
+    </tbody>
+  </table>
+</div>
+
+</div>
+
+<!-- ============================================ -->
+<!-- FOOTER                                       -->
+<!-- ============================================ -->
+<div class="doc-footer">
+  <p><strong>Handloom Haven</strong> — Project Documentation v1.0.0</p>
+  <p>Built with ❤️ for Arunachal Pradesh Heritage</p>
+  <p style="margin-top: 8px;">© 2026 Made by <strong>Ari's Web Creation.in</strong></p>
+  <p style="margin-top: 4px; font-size: 12px;">Generated by Codebuff 🤖 — MERN Stack E-Commerce Platform</p>
+</div>
+
+</body>
+</html>
